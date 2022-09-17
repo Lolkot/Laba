@@ -7,24 +7,26 @@ class Person
 {
 public:
     Person() = delete;
-    Person(QString last_name, QString first_name, QString patronymic):
-        _last_name(last_name),
-        _first_name(first_name),
+    Person(QString lastName, QString firstName, QString patronymic):
+        _lastName(lastName),
+        _firstName(firstName),
         _patronymic(patronymic){ };
 
-    Person(QString full_name);
+    Person(QString fullName);
 
-    void Set_last_name(const QString &last_name);
-    void Set_first_name(const QString &first_name);
-    void Set_patronymic(const QString &patronymic);
+    void setLastName(const QString &lastName);
+    void setFirstName(const QString &firstName);
+    void setPatronymic(const QString &patronymic);
 
-    const QString &Get_last_name() const { return _last_name; }  //получение фамилии
-    const QString &Get_first_name() const { return _first_name; }//получение имени
-    const QString &Get_patronymic() const { return _patronymic; }//полученеи отчества
+    const QString &getFullName() const { return _fullName; }//получение ФИО
+    const QString &getLastName() const { return _lastName; }  //получение фамилии
+    const QString &getFirstName() const { return _firstName; }//получение имени
+    const QString &getPatronymic() const { return _patronymic; }//полученеи отчества
 
 private:
-    QString _last_name; ///< Фамилия
-    QString _first_name; ///< Имя
+    QString _fullName; ///< ФИО
+    QString _lastName; ///< Фамилия
+    QString _firstName; ///< Имя
     QString _patronymic; ///< Отчество
 
 };

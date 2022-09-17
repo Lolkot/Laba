@@ -1,39 +1,47 @@
-#include "person.h"
-#include "empty.h"
 #include <iostream>
+#include <QString>
+#include <QDebug>
 
-Person::Person(QString full_name)
+#include "person.h"
+#include "estackempty.h"
+
+Person::Person(QString fullName)
 {
-    QStringList str = full_name.split(QRegularExpression("\\s+"), QString::SkipEmptyParts); //Разбивает строку на подстроки
+    //Разбивает строку на подстроки
+    QStringList stroka = fullName.split(QRegularExpression("\\s+"), QString::SkipEmptyParts);
 
     // если не правильное количество слов, то сообщаем об ошибке
     try {
-        if (str.size() != 2 && str.size() != 3)
+        if (stroka.size() < 3)
         {
             throw Exception("Error: Person(): String is invalid").what();
         }
     }  catch (const char* mes) {
-        std::cout << mes << std::endl;
+        qDebug() << mes;
         return ;
     }
 
-    _last_name = str[0];
-    _first_name = str[1];
-    if (str.size() == 3)
+    _fullName = fullName;
+    _lastName = stroka[0];
+    _firstName = stroka[1];
+
+    if (stroka.size() == 3)
     {
-        _patronymic = str[2];
+        _patronymic = stroka[2];
     }
 }
 
-void Person::Set_last_name(const QString &last_name)
+void Person::setLastName(const QString &last_name)
 {
-    this->_last_name = last_name;
+    this->_lastName = last_name;
 }
-void Person::Set_first_name(const QString &first_name)
+
+void Person::setFirstName(const QString &first_name)
 {
-    this->_first_name = first_name;
+    this->_firstName = first_name;
 }
-void Person::Set_patronymic(const QString &patronymic)
+
+void Person::setPatronymic(const QString &patronymic)
 {
     this->_patronymic = patronymic;
 }

@@ -1,5 +1,5 @@
-#ifndef EMPTY_H
-#define EMPTY_H
+#ifndef ESTACKEMPTY_H
+#define ESTACKEMPTY_H
 #include "exception.h"
 
 class EStackEmpty : public Exception
@@ -17,4 +17,4 @@ public:
     {
     }
 };
-#endif // EMPTY_H
+#endif // ESTACKEMPTY_H

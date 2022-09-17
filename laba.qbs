@@ -5,11 +5,11 @@ QtApplication {
 
     consoleApplication: true
     files: [
+        "estackempty.h",
         "main.cpp",
-        "empty.h",
         "exception.h",
         "person.cpp",
-        "person.h"
+        "person.h",
     ]
 
     Group {     // Properties for the produced executable
