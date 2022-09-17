@@ -1,7 +1,7 @@
 import qbs
 
 QtApplication {
-    cpp.cxxLanguageVersion: "c++11"
+    cpp.cxxLanguageVersion: "c++17"
 
     consoleApplication: true
     files: [
@@ -10,7 +10,9 @@ QtApplication {
         "exception.h",
         "person.cpp",
         "person.h",
-        "Stack.h"
+        "Stack.h",
+        "personkeeper.cpp",
+        "personkeeper.h"
     ]
 
     Group {     // Properties for the produced executable
