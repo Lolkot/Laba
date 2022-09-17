@@ -7,7 +7,9 @@ QtApplication {
     files: [
         "main.cpp",
         "empty.h",
-        "exception.h"
+        "exception.h",
+        "person.cpp",
+        "person.h"
     ]
 
     Group {     // Properties for the produced executable
