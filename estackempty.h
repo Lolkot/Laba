@@ -2,18 +2,18 @@
 #define ESTACKEMPTY_H
 #include "exception.h"
 
-class EStackEmpty : public Exception
+class EStackEmpty : public EStackException
 {
 public:
     // конструктор по умолчанию
     EStackEmpty()
-        : Exception("Stack is empty") ///< Инициализация сообщения по умолчанию об ошибки в базовом классе
+        : EStackException("Error: Stack is empty") ///< Инициализация сообщения по умолчанию об ошибки в базовом классе
     {
     }
 
     // конструктор копирования
     EStackEmpty(const EStackEmpty &t)
-        : Exception(t) ///< Инициализация переданного сообщения об ошибке в базовом классе
+        : EStackException(t) ///< Инициализация переданного сообщения об ошибке в базовом классе
     {
     }
 };

@@ -2,11 +2,11 @@
 #define EXCEPTION_H
 #include <cstring>
 
-class Exception
+class EStackException
 {
 public:
     // конструктор
-    Exception(const char* arg_message)
+    EStackException(const char* arg_message)
     {
         // выделяем память под сообщение об ошибке
         _errorMessage = new char[strlen(arg_message) + 1];
@@ -16,7 +16,7 @@ public:
     }
 
     // конструктор копирования
-    Exception(const Exception& exception)
+    EStackException(const EStackException& exception)
     {
         // выделяем память под копию сообщения
         _errorMessage = new char[strlen(exception._errorMessage) + 1];
@@ -27,11 +27,12 @@ public:
     }
 
     // деструктор
-    ~Exception()
+    ~EStackException()
     {
         // освобождаем память
         delete _errorMessage;
     }
+
     const char* what() const { return _errorMessage; }
 
 private:

@@ -14,7 +14,7 @@ Person::Person(QString fullName)
     try {
         if (stroka.size() < 3)
         {
-            throw Exception("Error: Person(): String is invalid").what();
+            throw EStackException("Error: Person(): String is invalid").what();
         }
     }  catch (const char* mes) {
         qDebug() << mes;
