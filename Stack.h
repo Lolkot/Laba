@@ -11,23 +11,23 @@ class Stack
 {
 public:
     ~Stack(); ///< деструктор
-    void push(const T &k); ///< помещение объекта в стек
-    const T pop(); ///< извлечение объекта из стека
+    void push(const T &val); ///< помещение элемента в стек
+    const T pop(); ///< извлечение элемента из стека
     int size(); ///< вернуть размер стека
     void clear(); ///< очистить весь стек
-    void enumeration(std::function<void(const T &k)> f) const; ///< функция перебора значений
+    void enumeration(std::function<void(const T &val)> func) const; ///< перебор элементов
 
 private:
     struct Node
     {
         Node() = default;
-        explicit Node (T k, Node *t) : value(k), prev(t) {};
+        explicit Node (T val, Node *node) : value(val), previousNode(node) {};
         const T value; ///< храним константное значение
 
-        Node *prev = nullptr; ///< указатель на предпоследний узел стека
+        Node *previousNode = nullptr; ///< указатель на предпоследний узел стека
     };
 
-    Node *lastElement { nullptr }; ///< последний элемент стека
+    Node *_lastElement { nullptr }; ///< последний элемент стека
 
     int _sizeOfStack { 0 }; ///< размер стека
 };
@@ -50,45 +50,44 @@ const T Stack<T>::pop()
 
     // если стек пуст, возвращаем исключение
     try {
-        if (lastElement == nullptr)
-        {
+        if (_lastElement == nullptr)
             throw EStackEmpty().what();
-        }
+
     }  catch (const char* mes) {
         std::cout << mes << std::endl;
         return {};
     }
 
-    // сохраняем значение узла в k
-    const T k = lastElement->value;
+    // сохраняем значение узла
+    const T value = _lastElement->value;
 
     // сохраняем последнией узел в tmp
-    Node *tmp = lastElement;
+    Node *tmp = _lastElement;
 
     // перемещаем на предпоследний узел
-    lastElement = lastElement->prev;
+    _lastElement = _lastElement->previousNode;
 
-    // удаляем последний узел
+    // освобождаем память из под последнего узла
     delete tmp;
 
     // уменьшаем размер стека
     _sizeOfStack--;
 
     // возвращаем сохраненое значение
-    return k;
+    return value;
 }
 
 template <class T>
 void Stack<T>::clear()
 {
     // пока стек не пуст
-    while (lastElement != nullptr)
+    while (_lastElement != nullptr)
     {
         // сохраняем последний элемент
-        Node *last = lastElement;
+        Node *last = _lastElement;
 
         // переопределяем последний элемент
-        lastElement = lastElement->prev;
+        _lastElement = _lastElement->previousNode;
 
         // удаляем последний элемент который сохраняли в last
         delete last;
@@ -97,41 +96,40 @@ void Stack<T>::clear()
 }
 
 template <class T>
-void Stack<T>::push(const T &k)
+void Stack<T>::push(const T &val)
 {
     // создаем новый узел
-    Node *node = new Node{ k, lastElement };
+    Node *node = new Node{ val, _lastElement };
 
     try {
         // память не выделелась
         if (node == nullptr)
-        {
             throw EStackException("Error: memory is not allocated").what();
-        }
+
     }  catch (const char* mes) {
         std::cout << mes << std::endl;
         return ;
     }
 
     // переопределяем созданный узел
-    lastElement = node;
+    _lastElement = node;
 
     // увеличиваем размер стека
     _sizeOfStack++;
 }
 
 template <class T>
-void Stack<T>::enumeration(std::function<void(const T &k)> f) const
+void Stack<T>::enumeration(std::function<void(const T &val)> func) const
 {
     // перебор начинаем с последнего
-    Node *last = lastElement;
+    Node *last = _lastElement;
 
     // пока не дойдем до первого
     while (last != nullptr)
     {
         // вызов функции обратной связи
-        f(last->value);
-        last = last->prev;
+        func(last->value);
+        last = last->previousNode;
     }
 }
 #endif // STACK_H

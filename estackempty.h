@@ -12,8 +12,8 @@ public:
     }
 
     // конструктор копирования
-    EStackEmpty(const EStackEmpty &t)
-        : EStackException(t) ///< Инициализация переданного сообщения об ошибке в базовом классе
+    EStackEmpty(const EStackEmpty &exception)
+        : EStackException(exception) ///< Инициализация переданного сообщения об ошибке в базовом классе
     {
     }
 };

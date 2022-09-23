@@ -10,18 +10,15 @@
 class PersonKeeper
 {
 public:
-    static PersonKeeper &Instance(); ///< хранится единственный экземпляр класса
-    void readPersons(QString path); ///< считать ФИО из файла
-    void writePersons(QString path) const; ///< записать ФИО в файл
-    int size(); ///< количество ФИО
-    void clear(); ///< очистить список ФИО
+    static PersonKeeper &instance(); ///< хранится единственный экземпляр класса
+    Stack<Person> readPersons(QString path); ///< считать ФИО из файла и вернуть данные
+    void writePersons(QString path, Stack<Person> &person) const; ///< записать ФИО в файл
 
 private:
     PersonKeeper(){} ///< конструкторы по умолчанию
     PersonKeeper(const PersonKeeper &); ///< конструктор копирования
     ~PersonKeeper(){} ///< деструктор
     PersonKeeper &operator=(const PersonKeeper &); ///< оператор присовения
-    Stack<Person> stackOfPerson; ///< ФИО
 };
 
 #endif // PERSONKEEPER_H

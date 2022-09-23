@@ -10,25 +10,23 @@ Person::Person(QString fullName)
     //Разбивает строку на подстроки
     QStringList stroka = fullName.split(QRegularExpression("\\s+"), QString::SkipEmptyParts);
 
-    // если не правильное количество слов, то сообщаем об ошибке
+    // если введено не корректное имя то выводим сообщение об ошибке
     try {
-        if (stroka.size() < 3)
-        {
-            throw EStackException("Error: Person(): String is invalid").what();
-        }
+        if (stroka.size() > 3 || stroka.size() == 1)
+            throw EStackException("Error: unavalibale input").what();
     }  catch (const char* mes) {
         qDebug() << mes;
         return ;
     }
 
-    _fullName = fullName;
     _lastName = stroka[0];
     _firstName = stroka[1];
 
-    if (stroka.size() == 3)
-    {
+    if (stroka.size() == 3) {
+        _fullName = fullName;
         _patronymic = stroka[2];
     }
+
 }
 
 void Person::setLastName(const QString &last_name)

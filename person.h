@@ -14,14 +14,14 @@ public:
 
     Person(QString fullName);
 
-    void setLastName(const QString &lastName);
-    void setFirstName(const QString &firstName);
-    void setPatronymic(const QString &patronymic);
+    void setLastName(const QString &lastName);    // задать фамалию
+    void setFirstName(const QString &firstName);  // задать имя
+    void setPatronymic(const QString &patronymic);// задать отчество
 
-    const QString &getFullName() const { return _fullName; }//получение ФИО
-    const QString &getLastName() const { return _lastName; }  //получение фамилии
-    const QString &getFirstName() const { return _firstName; }//получение имени
-    const QString &getPatronymic() const { return _patronymic; }//полученеи отчества
+    const QString &getFullName() const { return _fullName; }    // получить ФИО
+    const QString &getLastName() const { return _lastName; }    // получить фамилии
+    const QString &getFirstName() const { return _firstName; }  // получить имени
+    const QString &getPatronymic() const { return _patronymic; }// получить отчества
 
 private:
     QString _fullName; ///< ФИО

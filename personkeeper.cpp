@@ -6,25 +6,16 @@
 #include "personkeeper.h"
 #include "estackempty.h"
 
-int PersonKeeper::size()
-{
-    return stackOfPerson.size();
-}
-
-void PersonKeeper::clear()
-{
-    return stackOfPerson.clear();
-}
-
-PersonKeeper &PersonKeeper::Instance()
+PersonKeeper &PersonKeeper::instance()
 {
     static PersonKeeper inst;
     return inst;
 }
 
-void PersonKeeper::readPersons(QString path)
+Stack<Person> PersonKeeper::readPersons(QString path)
 {
     QFile file(path);
+    Stack<Person> person;
 
     // Генерация исключения при не открытом или не существующем файле
     try {
@@ -38,28 +29,29 @@ void PersonKeeper::readPersons(QString path)
 
     }  catch (const char* mes) {
         std::cout << mes << std::endl;
-        return ;
+        return {};
     }
 
     // поток текстовых данных файла
-    QTextStream stream(&file);
+    QTextStream input(&file);
 
     // буфер для записи строк
     QString buffLine;
 
     // считытваем, пока не конец файла
-    while (stream.readLineInto(&buffLine))
+    while (input.readLineInto(&buffLine))
     {
         // добавляем в стек ФИО
-        stackOfPerson.push(Person(buffLine));
+        person.push(Person(buffLine));
     }
 
     // закрываем для чтения файл
     file.close();
 
+    return person;
 }
 
-void PersonKeeper::writePersons(QString path) const
+void PersonKeeper::writePersons(QString path, Stack<Person> &person) const
 {
     QFile file(path);
 
@@ -78,10 +70,10 @@ void PersonKeeper::writePersons(QString path) const
         return ;
     }
 
-    QTextStream stream(&file);
+    QTextStream output(&file);
 
     // проходимся по всем значеним для записи
-    stackOfPerson.enumeration([&](const Person &person) { stream << person.getFullName() << "\n"; });
+    person.enumeration([&](const Person &person) { output << person.getFullName() << "\n"; });
 
     // закрываем файл для записи
     file.close();

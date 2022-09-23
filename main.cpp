@@ -7,20 +7,28 @@
 
 #include "personkeeper.h"
 #include "Stack.h"
-
+#include "person.h"
 int main()
 {
-    QString inputFile = "input.txt";
-    QString outputFile = "output.txt";
-    PersonKeeper &persorKeep(PersonKeeper::Instance());
+    QString inputFile = "input.txt"; // файл для чтения
+    QString outputFile = "output.txt"; // файл для записи
+    Stack<Person> person;
+    PersonKeeper &persorKeep(PersonKeeper::instance());
 
-    qDebug() << "Creat 2 files in the folder where the project is exist: input.txt and output.txt";
+    qDebug() << "Creat 2 files in the folder where the project exists: input.txt and output.txt";
     // считываем имена из файла
     qDebug() << "Read data from input.txt";
-    persorKeep.readPersons(inputFile);
+    person = persorKeep.readPersons(inputFile);
+
+    qDebug() << "Data from input.txt: ";
+    // перебор стека для вывода
+    person.enumeration([&](const Person &value){
+        qDebug() << value.getLastName() << value.getFirstName() << value.getPatronymic();
+    });
+
     qDebug() << "Write data from input.txt into ouput.txt";
     // записываем имена в файл
-    persorKeep.writePersons(outputFile);
+    persorKeep.writePersons(outputFile, person);
     qDebug() << "Now you can open files to compare data";
 
     qDebug() << "---------------------------------";
@@ -28,7 +36,6 @@ int main()
     srand (time(NULL));
     Stack<int> stackOfInteger;
     Stack<float> stackOffloat;
-    Stack<QString> stackOfString;
 
     qDebug() << "Add 10 randoms values of integer into stackOfInteger";
     for(int i = 0; i < 10; ++i) {
@@ -39,7 +46,7 @@ int main()
 
     qDebug() << "Output the stackOfInteger: ";
     stackOfInteger.enumeration([&](const int &value){
-       qDebug() << value;
+        qDebug() << value;
     });
 
     qDebug() << "---------------------------------";
@@ -58,22 +65,7 @@ int main()
 
     qDebug() << "---------------------------------";
 
-    qDebug() << "Add 5 values of string into stackOfString";
-    stackOfString.push("Alexander Pushkin");
-    stackOfString.push("Eugene Onegin");
-    stackOfString.push("Vladislav Kovalev");
-    stackOfString.push("Olga Kovaleva");
-    stackOfString.push("Rastilav Dupkin");
-
-
-    qDebug() << "Output the stackOfString: ";
-    stackOfString.enumeration([&](const QString &val){
-        qDebug() << val;
-    });
-
-    qDebug() << "---------------------------------";
-
     qDebug() << "Try to throw an exception";
-    Stack<int> stack;
+    Stack<bool> stack;
     stack.pop();
 }
